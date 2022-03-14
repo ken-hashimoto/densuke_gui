@@ -24,7 +24,21 @@ def input_check(m_d):
     if int(m) < 1 or 12 < int(m) or int(d) < 1 or calendar.monthrange(dt_now.year, int(m))[1] < int(d):
       return False
   return True
-
+def popup_copy(link):
+  import pyperclip
+  layout_copy = [[sg.Text("処理が完了しました。できあがったリンクはこちらです。")],
+                  [sg.Text(link)],
+                  [sg.Button("リンクをコピー",key = "copy"),sg.Text(size=(10,1), key='copied')]
+                  ]
+  window_copy = sg.Window('お知らせ', layout_copy)
+  while True:
+   # ウィンドウからのイベントを受信する
+    event_copy, values_copy = window_copy.read()
+    if event_copy is None:
+      break
+    if event_copy == "copy":
+      pyperclip.copy(link)
+      window_copy['copied'].update("copied!")
 def densuke_make(schedule,des,mail,title,option_id):
   from selenium import webdriver
   import pyperclip
@@ -51,6 +65,7 @@ def densuke_make(schedule,des,mail,title,option_id):
   WebDriverWait(webdriver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, 'copybtn')))
   #リンクをコピーする
   webdriver.find_element_by_xpath("//*[@id='newcomer']/form/div/table/tbody/tr/td/div/a[1]").click()
+  global link
   link = pyperclip.paste()
   #slackのDMに送信
   if WEB_HOOK_URL != "":
@@ -65,12 +80,18 @@ default_text = "" #日付を入力するところにデフォルトで書いて�
 description_four = "◎ いける\n○ 絶起可能性有\n△（途中からor途中まで参加可能、現時点で未確定など）\n× 無理"
 description_three = "○ いける\n△（途中からor途中まで参加可能、現時点で未確定など）\n× 無理"
 description_two = "○ いける\n× 無理"
+#ラジオボタンで選べる時刻を設定
+time_table_1 = "10:30"
+time_table_2 = "13:00"
+time_table_3 = "15:00"
+#本ツールで伝助のページを作成した後にそのリンクをポップアップ出力するか否か
+popup_bool = True #デフォルト設定はTrue（ポップアップ出力される）
 #---------------------------------------------------------------------------------------------------------------
 layout =  [ [sg.Text("タイトルを入力"),sg.InputText(title,size = (28,1),key = "title")],
             [sg.Text('日付を入力（ 例:1月2日なら「1 2」)  複数ある時は改行区切り')],
             [sg.Multiline(default_text,size = (50,8),key ="date")],
             [sg.Button(button_text="次の木曜と土曜",key = "b1"),sg.Button(button_text="月曜から土曜",key = "b2")],
-            [sg.Text('時間を選択'),sg.Checkbox("10:30", default=True,key = "10"),sg.Checkbox("13:00", default=True,key = "13"),sg.Checkbox("15:00", default=True,key = "15")],
+            [sg.Text('時間を選択'),sg.Checkbox(time_table_1, default=True,key = "time_table_1"),sg.Checkbox(time_table_2, default=True,key = "time_table_2"),sg.Checkbox(time_table_3, default=True,key = "time_table_3")],
             [sg.Text("リンクを送信するメールを入力"),sg.InputText(mail_address,size = (28,1),key = 'mail')],
             [sg.Text("詳細を入力")],
             [sg.Radio("「○△×」から選択",group_id = "option",key = "three",default = True,enable_events= True),sg.Radio("「○×」から選択",group_id = "option",key = "two",enable_events= True),sg.Radio("「◎○△×」から選択",group_id = "option",key = "four",enable_events= True)],
@@ -80,6 +101,7 @@ layout =  [ [sg.Text("タイトルを入力"),sg.InputText(title,size = (28,1),k
             ]
 day_of_week = ["(月)","(火)","(水)","(木)","(金)","(土)","(日)"]
 window = sg.Window('伝助作成ツール', layout,size=(530,600))
+link = ""
 while True:
   event,values = window.read()
   if event is None:
@@ -133,12 +155,12 @@ while True:
       schedule.append((m,d,day_of_week[w]))
     str_schedule = ""
     time_table = []
-    if values["10"] == True:
-      time_table.append("10:30")
-    if values["13"] == True:
-      time_table.append("13:00")
-    if values["15"] == True:
-      time_table.append("15:00")
+    if values["time_table_1"] == True:
+      time_table.append(time_table_1)
+    if values["time_table_2"] == True:
+      time_table.append(time_table_2)
+    if values["time_table_3"] == True:
+      time_table.append(time_table_3)
     for m,d,w in schedule:
       for t in time_table:
         str_schedule += "{0}/{1} {2} {3}-\n".format(m,d,w,t)
@@ -149,3 +171,5 @@ while True:
     if values["four"] == True:
       option_id = "eventchoice3"
     densuke_make(str_schedule,values["des"],values["mail"],values["title"],option_id)
+    if popup_bool:
+      popup_copy(link)
