@@ -47,12 +47,7 @@ WEB_HOOK_URL =""
 伝助のページを作成後、リンクをコピーするためのポップアップを表示する機能を追加しました。    
 これによりメールアドレスやWebhook URLを設定しなくても、作成されたページのリンクを取得できるようになりました。**
 # 使用例
-**(2022/03/14 追記)  
-GIFが非常に見にくかったので改めて動画で撮影したものをyoutubeにアップしました** 
-https://www.youtube.com/watch?v=yvDfZAcmS6A  
+**(2022/03/17 更新)  
+GIFを見やすいものに変更しました。** 
 <br>
-使用している様子を映したgifを貼り付けます。
-この例では"月曜から土曜"ボタンと"「◎○△×」から選択"ボタンを使用しています。 
-<img src="https://user-images.githubusercontent.com/98263011/155164168-b7347c89-6fc0-4bba-a8c8-e13a0ba15679.gif" width="1000px" alt="使用例" title="使用例">  
-このGIF画像で実際にできあがったページは[こちら](https://densuke.biz/list?cd=94khdRbrsga36FVX)  
-
+![伝助作成ツール　使用例（ゆっくり）](https://user-images.githubusercontent.com/98263011/158779416-b68b4a61-d452-4851-bccd-186242f16a49.gif)
