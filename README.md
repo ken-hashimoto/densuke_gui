@@ -48,6 +48,7 @@ WEB_HOOK_URL =""
 これによりメールアドレスやWebhook URLを設定しなくても、作成されたページのリンクを取得できるようになりました。**
 # 使用例
 **(2022/03/17 更新)  
-GIFを見やすいものに変更しました。** 
+GIFを見やすいものに変更しました。** この例で作成したページは[こちら](https://www.densuke.biz/list?cd=9UVskuht76SbTxrp)
 <br>
-![伝助作成ツール　使用例（ゆっくり）](https://user-images.githubusercontent.com/98263011/158779416-b68b4a61-d452-4851-bccd-186242f16a49.gif)
+![伝助作成ツール　使用例（ゆっくり）](https://user-images.githubusercontent.com/98263011/158779416-b68b4a61-d452-4851-bccd-186242f16a49.gif)  
+
