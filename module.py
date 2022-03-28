@@ -25,10 +25,12 @@ def input_check(m_d):
       return False
   return True
 def popup_copy(link):
+  import webbrowser
   import pyperclip
   layout_copy = [[sg.Text("処理が完了しました。できあがったリンクはこちらです。")],
                   [sg.Text(link)],
-                  [sg.Button("リンクをコピー",key = "copy"),sg.Text(size=(10,1), key='copied')]
+                  [sg.Button("リンクをコピー",key = "copy"),sg.Text(size=(10,1), key='copied')],
+                  [sg.Button('リンクへ飛ぶ',key = "to_link")]
                   ]
   window_copy = sg.Window('お知らせ', layout_copy)
   while True:
@@ -39,6 +41,8 @@ def popup_copy(link):
     if event_copy == "copy":
       pyperclip.copy(link)
       window_copy['copied'].update("copied!")
+    if event_copy == "to_link":
+      webbrowser.open(link)
 def densuke_make(schedule,des,mail,title,option_id):
   from selenium import webdriver
   import pyperclip

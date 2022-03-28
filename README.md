@@ -9,7 +9,8 @@ https://www.youtube.com/watch?v=5tq2-lj_Rko
 このモジュールでは以下のライブラリを使用しているのでインストールしていないものがあれば各個人でインストールしてください。　　
 >* selenium
 >* pyperclip
->* chromedriver_binary
+>* chromedriver-binary
+>* chromedriver-binary-auto
 >* slackweb
 >* PySimpleGUI　
 
